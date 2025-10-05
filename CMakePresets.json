@@ -167,6 +167,18 @@
     ],
     "buildPresets": [
         {
+            "name": "windows-vs2022-release",
+            "displayName": "Release",
+            "configurePreset": "windows-vs2022",
+            "configuration": "Release"
+        },
+        {
+            "name": "windows-vs2022-debug",
+            "displayName": "Debug",
+            "configurePreset": "windows-vs2022",
+            "configuration": "Debug"
+        },
+        {
             "name": "windows-ninja-msvc-release",
             "displayName": "Release",
             "configurePreset": "windows-ninja-msvc",
