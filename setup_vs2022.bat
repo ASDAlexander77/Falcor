@@ -26,7 +26,7 @@ if exist %CUSTOM_CUDA_DIR%\bin\nvcc.exe (
 
 : Configure solution by running cmake.
 echo Configuring Visual Studio solution ...
-%CMAKE_EXE% --preset %PRESET% -T %TOOLSET%
+%CMAKE_EXE% --preset %PRESET% -T %TOOLSET% -D FALCOR_USE_SYSTEM_PYTHON=ON
 if errorlevel 1 (
     echo Failed to configure solution!
     exit /b 1

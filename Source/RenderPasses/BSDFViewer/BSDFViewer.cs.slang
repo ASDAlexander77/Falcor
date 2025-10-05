@@ -376,7 +376,7 @@ struct BSDFViewer
         SampleGenerator sg = SampleGenerator(pixel, params.frameCount);
         if (params.viewerMode == BSDFViewerMode::Slice)
         {
-            if (all(uv >= 0.f && uv < 1.f))
+            if (all(uv >= 0.f) && all(uv < 1.f))
             {
                 output = evalBSDFSlice(uv, lod, data, sg);
             }
