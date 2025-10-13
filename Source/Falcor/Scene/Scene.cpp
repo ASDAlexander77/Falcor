@@ -4375,5 +4375,23 @@ namespace Falcor
         scene.def("get_mesh", &Scene::getMesh, "mesh_id"_a);
         scene.def("get_mesh_vertices_and_indices", getMeshVerticesAndIndicesPython, "mesh_id"_a, "buffers"_a);
         scene.def("set_mesh_vertices", setMeshVerticesPython, "mesh_id"_a, "buffers"_a);
+
+        // My addons
+
+        // Geometry Instances
+        pybind11::class_<GeometryInstanceData> geometryInstanceData(m, "GeometryInstanceData");
+        geometryInstanceData.def_property_readonly("node_id", &GeometryInstanceData::getGlobalMatrixID);
+
+        scene.def("get_mesh_instance_ids", [] (Scene* pScene, MeshID meshId) {
+            FALCOR_CHECK(pScene, "'pScene' is missing");
+            return pScene->getMeshInstanceIDs(meshId);
+        }, "mesh_id"_a);
+
+        scene.def("get_geometry", &Scene::getGeometryInstance, "instance_id"_a);
+
+        scene.def("update_node_transform", [] (Scene* pScene, NodeID nodeId, const Transform& transform) {
+            FALCOR_CHECK(pScene, "'pScene' is missing");
+            pScene->updateNodeTransform(nodeId.get(), transform.getMatrix());
+        }, "node_id"_a, "transform"_a = Transform());
     }
 }

@@ -132,6 +132,11 @@ struct GeometryInstanceData
         return GeometryType(flags >> kTypeOffset);
     }
 
+    uint getGlobalMatrixID() CONST_FUNCTION
+    {
+        return globalMatrixID;
+    }
+
     bool isDynamic() CONST_FUNCTION
     {
         return (flags & (uint)GeometryInstanceFlags::IsDynamic) != 0;
