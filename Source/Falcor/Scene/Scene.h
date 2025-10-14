@@ -1050,6 +1050,7 @@ namespace Falcor
         /** Get the name of the mesh with the given ID.
         */
         std::string getMeshName(uint32_t meshID) const { FALCOR_ASSERT(meshID < mMeshNames.size());  return mMeshNames[meshID]; }
+        uint32_t getMeshId(const std::string& name) const { return std::find(mMeshNames.begin(), mMeshNames.end(), name) - mMeshNames.begin(); }
 
         /** Return true if the given mesh ID is valid, false otherwise.
         */

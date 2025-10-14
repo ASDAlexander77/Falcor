@@ -4373,6 +4373,12 @@ namespace Falcor
         meshDesc.def_property_readonly("triangle_count", &MeshDesc::getTriangleCount);
 
         scene.def("get_mesh", &Scene::getMesh, "mesh_id"_a);
+        scene.def("get_mesh", [] (Scene* pScene, const std::string& name) {
+            FALCOR_CHECK(pScene, "'pScene' is missing");
+            auto mesh_id = pScene->getMeshId(name);
+            FALCOR_CHECK(pScene->hasMesh(mesh_id), "Mesh not found");
+            return pScene->getMesh(MeshID{mesh_id});
+        }, "name"_a);
         scene.def("get_mesh_vertices_and_indices", getMeshVerticesAndIndicesPython, "mesh_id"_a, "buffers"_a);
         scene.def("set_mesh_vertices", setMeshVerticesPython, "mesh_id"_a, "buffers"_a);
 
@@ -4382,10 +4388,24 @@ namespace Falcor
         pybind11::class_<GeometryInstanceData> geometryInstanceData(m, "GeometryInstanceData");
         geometryInstanceData.def_property_readonly("node_id", &GeometryInstanceData::getGlobalMatrixID);
 
+        scene.def("get_mesh_id", [] (Scene* pScene, const std::string& name) {
+            FALCOR_CHECK(pScene, "'pScene' is missing");
+            auto mesh_id = pScene->getMeshId(name);
+            FALCOR_CHECK(pScene->hasMesh(mesh_id), "Mesh not found");
+            return mesh_id;
+        }, "name"_a);
+
         scene.def("get_mesh_instance_ids", [] (Scene* pScene, MeshID meshId) {
             FALCOR_CHECK(pScene, "'pScene' is missing");
             return pScene->getMeshInstanceIDs(meshId);
         }, "mesh_id"_a);
+
+        scene.def("get_mesh_instance_ids", [] (Scene* pScene, const std::string& name) {
+            FALCOR_CHECK(pScene, "'pScene' is missing");
+            auto mesh_id = pScene->getMeshId(name);
+            FALCOR_CHECK(pScene->hasMesh(mesh_id), "Mesh not found");
+            return pScene->getMeshInstanceIDs(MeshID{mesh_id});
+        }, "name"_a);
 
         scene.def("get_geometry", &Scene::getGeometryInstance, "instance_id"_a);
 
