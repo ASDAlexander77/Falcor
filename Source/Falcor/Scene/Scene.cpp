@@ -4407,6 +4407,9 @@ namespace Falcor
             return pScene->getMeshInstanceIDs(MeshID{mesh_id});
         }, "name"_a);
 
+        // my addon
+        scene.def("get_node", &Scene::getNode, "name"_a);
+
         scene.def("get_geometry", &Scene::getGeometryInstance, "instance_id"_a);
 
         scene.def("update_node_transform", [] (Scene* pScene, NodeID nodeId, const Transform& transform) {

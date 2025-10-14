@@ -654,6 +654,10 @@ namespace Falcor
         */
         const MeshDesc& getMesh(MeshID meshID) const { return mMeshDesc[meshID.get()]; }
 
+        uint32_t getNodeCount() const { return (uint32_t)mSceneGraph.size(); }
+
+        const Node& getNode(NodeID nodeID) const { return mSceneGraph[nodeID.get()]; }
+
         /** Get a mesh's instance IDs.
         */
         const std::vector<uint32_t>& getMeshInstanceIDs(MeshID meshID) const { return mMeshIdToInstanceIds[meshID.get()]; }
