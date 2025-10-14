@@ -360,5 +360,8 @@ namespace Falcor
             { return TriangleMesh::createFromFile(getActiveAssetResolver().resolvePath(path), importFlags); },
             "path"_a, "importFlags"_a
         ); // PYTHONDEPRECATED
+
+        // my addon
+        triangleMesh.def("applyTransform", (void (TriangleMesh::*)(const Transform&)) &TriangleMesh::applyTransform, "transform"_a);
     }
 }
