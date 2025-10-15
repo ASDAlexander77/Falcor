@@ -235,6 +235,8 @@ namespace Falcor
             float4x4 transform;         ///< The node's transformation matrix.
             float4x4 meshBind;          ///< For skinned meshes. Mesh world space transform at bind time.
             float4x4 localToBindSpace;  ///< For bones. Skeleton to bind space transformation. AKA the inverse-bind transform.
+
+            const std::string& getName() const { return name; }
         };
 
         /** Full set of required data to create a scene object.

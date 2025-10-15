@@ -4388,6 +4388,10 @@ namespace Falcor
         pybind11::class_<GeometryInstanceData> geometryInstanceData(m, "GeometryInstanceData");
         geometryInstanceData.def_property_readonly("node_id", &GeometryInstanceData::getGlobalMatrixID);
 
+        // Node Instances
+        pybind11::class_<Scene::Node> node(m, "Node");
+        node.def_property_readonly("name", &Scene::Node::getName);
+
         scene.def("get_mesh_id", [] (Scene* pScene, const std::string& name) {
             FALCOR_CHECK(pScene, "'pScene' is missing");
             auto mesh_id = pScene->getMeshId(name);
@@ -4407,7 +4411,6 @@ namespace Falcor
             return pScene->getMeshInstanceIDs(MeshID{mesh_id});
         }, "name"_a);
 
-        // my addon
         scene.def("get_node", &Scene::getNode, "name"_a);
 
         scene.def("get_geometry", &Scene::getGeometryInstance, "instance_id"_a);
