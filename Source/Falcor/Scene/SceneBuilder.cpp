@@ -1055,6 +1055,21 @@ namespace Falcor
         return animation;
     }
 
+    ref<Animation> SceneBuilder::createAnimationNode(uint32_t node_id, const std::string& name, double duration)
+    {
+        auto nodeID = NodeID{node_id};
+        if (nodeID != NodeID::Invalid() && isNodeAnimated(nodeID))
+        {
+            logWarning("Animatable object is already animated.");
+            return nullptr;
+        }
+        if (nodeID == NodeID::Invalid()) nodeID = addNode(Node{ name, float4x4::identity(), float4x4::identity() });
+
+        auto animation = Animation::create(name, nodeID, duration);
+        addAnimation(animation);
+        return animation;
+    }
+
     // Scene graph
 
     NodeID SceneBuilder::addNode(const Node& node)
@@ -2996,6 +3011,7 @@ namespace Falcor
         sceneBuilder.def("addCamera", &SceneBuilder::addCamera, "camera"_a);
         sceneBuilder.def("addAnimation", &SceneBuilder::addAnimation, "animation"_a);
         sceneBuilder.def("createAnimation", &SceneBuilder::createAnimation, "animatable"_a, "name"_a, "duration"_a);
+        sceneBuilder.def("createAnimation", &SceneBuilder::createAnimationNode, "nodeID"_a, "name"_a, "duration"_a);
         sceneBuilder.def("addNode", [] (SceneBuilder* pSceneBuilder, const std::string& name, const Transform& transform, NodeID parent) {
             FALCOR_CHECK(pSceneBuilder, "'pSceneBuilder' is missing");
             SceneBuilder::Node node;

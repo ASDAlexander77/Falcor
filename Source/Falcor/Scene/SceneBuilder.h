@@ -632,6 +632,7 @@ namespace Falcor
             \return Returns a new animation or nullptr if an animation already exists.
         */
         ref<Animation> createAnimation(ref<Animatable> pAnimatable, const std::string& name, double duration);
+        ref<Animation> createAnimationNode(uint32_t node_id, const std::string& name, double duration);
 
         // Scene graph
 

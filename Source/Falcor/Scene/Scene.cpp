@@ -4419,5 +4419,18 @@ namespace Falcor
             FALCOR_CHECK(pScene, "'pScene' is missing");
             pScene->updateNodeTransform(nodeId.get(), transform.getMatrix());
         }, "node_id"_a, "transform"_a = Transform());
+
+        scene.def("update_node_transform", [] (Scene* pScene, const std::string& name, const Transform& transform) {
+            FALCOR_CHECK(pScene, "'pScene' is missing");
+            auto count = pScene->getNodeCount();
+            for (uint32_t i = 0; i < count; i++) {
+                auto node = pScene->getNode(NodeID{i});
+                if (node.getName() == name)
+                {
+                    pScene->updateNodeTransform(i, transform.getMatrix());
+                    return;
+                }
+            }
+        }, "name"_a, "transform"_a = Transform());
     }
 }
